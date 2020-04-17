@@ -54,7 +54,7 @@ RUN chown -R $USER:$USER /home/$USER && \
           chmod 775 /home/$USER/.vnc/xstartup && \
           chmod 600 /home/$USER/.vnc/passwd
 
-RUN sed -i '0,/port=-1/{s/port=-1/port=5901/}' /etc/xrdp/xrdp.ini
+#RUN sed -i '0,/port=-1/{s/port=-1/port=5901/}' /etc/xrdp/xrdp.ini
 
 EXPOSE 5901
 EXPOSE 6080
