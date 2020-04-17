@@ -1,8 +1,9 @@
 FROM centos:7
 MAINTAINER forsrc@gmail.com
 
-ARG USER=forsrc
-ARG PASSWD=forsrc
+ENV USER=forsrc
+ENV PASSWD=forsrc
+ENV DISPLAY=1280x1024
 
 RUN yum makecache && \
           yum install -y epel*
@@ -47,7 +48,7 @@ USER $USER
 
 #ENTRYPOINT ["/usr/bin/vncserver", "-fg"]
 
-CMD ["sh", "-c", "vncserver :1 && websockify --web=/usr/share/novnc/ --cert=/home/forsrc/novnc.pem 6080 localhost:5901"]
+CMD ["sh", "-c", "vncserver -geometry $DISPLAY :1 && websockify --web=/usr/share/novnc/ --cert=/home/$USER/novnc.pem 6080 localhost:5901"]
 
 
 
