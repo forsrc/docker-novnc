@@ -52,6 +52,6 @@ EXPOSE 6080
 WORKDIR /home/$USER
 USER $USER
 
-CMD ["sh", "-c", "vncserver -geometry $DISPLAY  :1&& websockify --web=/usr/share/novnc/ --cert=/home/$USER/novnc.pem 6080 localhost:5901"]
+CMD ["sh", "-c", "vncserver -geometry $DISPLAY :1 && websockify --web=/usr/share/novnc/ --cert=/home/$USER/novnc.pem 6080 localhost:5901"]
 
 
