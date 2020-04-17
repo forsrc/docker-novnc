@@ -8,7 +8,7 @@ ENV PASSWD=forsrc
 
 RUN apt-get update
 
-RUN apt-get install -y nano xorg lxde-core lxterminal xrdp firefox tightvncserver
+RUN apt-get install -y nano xorg lxde-core lxterminal xrdp firefox tightvncserver sudo
 
 RUN apt-get install -y python-numpy websockify novnc
 
