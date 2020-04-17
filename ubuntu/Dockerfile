@@ -18,24 +18,24 @@ RUN apt-get clean
 RUN /bin/dbus-uuidgen --ensure
 
 RUN useradd -m $USER && \
-    echo "$USER:$PASSWD" | chpasswd && \
-    echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+         echo "$USER:$PASSWD" | chpasswd && \
+         echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 
 
 RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout /home/$USER/novnc.pem -out /home/$USER/novnc.pem -days 365 -subj /C=CN/O="forsrc"/OU="forsrc"/CN="forsrc"/ST="forsrc"/L="forsrc"
 
 RUN mkdir /home/$USER/.vnc
-RUN echo '#!/bin/sh'                    >  /home/$USER/.vnc/xstartup
-RUN echo 'xrdb $HOME/.Xresources'       >> /home/$USER/.vnc/xstartup
-RUN echo 'xsetroot -solid grey'         >> /home/$USER/.vnc/xstartup
+RUN echo '#!/bin/sh'                                                      >    /home/$USER/.vnc/xstartup
+RUN echo 'xrdb $HOME/.Xresources'                      >> /home/$USER/.vnc/xstartup
+RUN echo 'xsetroot -solid grey'                                 >> /home/$USER/.vnc/xstartup
 RUN echo 'export XKL_XMODMAP_DISABLE=1' >> /home/$USER/.vnc/xstartup
-RUN echo '/etc/X11/Xsession'            >> /home/$USER/.vnc/xstartup
-RUN echo 'lxterminal &'                 >> /home/$USER/.vnc/xstartup
-RUN echo '/usr/bin/lxsession -s LXDE &' >> /home/$USER/.vnc/xstartup
-RUN echo "${PASSWD}" | vncpasswd -f     >  /home/$USER/.vnc/passwd
+RUN echo '/etc/X11/Xsession'                                    >> /home/$USER/.vnc/xstartup
+RUN echo 'lxterminal &'                                                >> /home/$USER/.vnc/xstartup
+RUN echo '/usr/bin/lxsession -s LXDE &'               >> /home/$USER/.vnc/xstartup
+RUN echo "${PASSWD}" | vncpasswd -f                 >    /home/$USER/.vnc/passwd
 RUN echo $PASSWD > password.txt && \
-    cat password.txt password.txt | vncpasswd -f && \
-    rm password.txt
+          cat password.txt password.txt | vncpasswd -f && \
+          rm password.txt
 
 RUN touch /home/$USER/.Xauthority
 RUN chown -R $USER:$USER /home/$USER
