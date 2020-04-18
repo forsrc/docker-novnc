@@ -4,7 +4,7 @@ MAINTAINER forsrc@gmail.com
 ENV DEBIAN_FRONTEND=noninteractive
 ENV USER=forsrc
 ENV PASSWD=forsrc
-
+ENV DISPLAY=1280x1024
 
 RUN apt-get update
 
@@ -64,6 +64,6 @@ EXPOSE 6080
 WORKDIR /home/$USER
 USER $USER
 
-CMD ["sh", "-c", "vncserver :1 && websockify --web=/usr/share/novnc/ --cert=/home/forsrc/novnc.pem 6080 localhost:5901"]
+CMD ["sh", "-c", "vncserver -geometry $DISPLAY :1 && websockify --web=/usr/share/novnc/ --ssl-only --cert=/home/$USER/novnc.pem --key=/home/$USER/novnc.pem  6080 localhost:5901"]
 
 
