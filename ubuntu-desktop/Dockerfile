@@ -29,19 +29,21 @@ RUN useradd -m $USER && \
 RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout /home/$USER/novnc.pem -out /home/$USER/novnc.pem -days 365 -subj /C=CN/O="forsrc"/OU="forsrc"/CN="forsrc"/ST="forsrc"/L="forsrc"
 
 RUN mkdir /home/$USER/.vnc
-RUN echo '#!/bin/sh'                                                                                               >    /home/$USER/.vnc/xstartup
-RUN echo 'xexport XKL_XMODMAP_DISABLE=1'                                        >> /home/$USER/.vnc/xstartup
-RUN echo 'xunset SESSION_MANAGER'                                                         >> /home/$USER/.vnc/xstartup
-RUN echo 'xunset DBUS_SESSION_BUS_ADDRESS'                                 >> /home/$USER/.vnc/xstartup
-RUN echo 'x[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup'            >> /home/$USER/.vnc/xstartup
-RUN echo 'x[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources'  >> /home/$USER/.vnc/xstartup
-RUN echo 'xxsetroot -solid grey'                                                                        >> /home/$USER/.vnc/xstartup
-RUN echo 'xvncconfig -iconic &'                                                                         >> /home/$USER/.vnc/xstartup
-RUN echo 'xgnome-panel &'                                                                                >> /home/$USER/.vnc/xstartup
-RUN echo 'xgnome-settings-daemon &'                                                        >> /home/$USER/.vnc/xstartup
-RUN echo 'xmetacity &'                                                                                         >> /home/$USER/.vnc/xstartup
-RUN echo 'xnautilus &'                                                                                          >> /home/$USER/.vnc/xstartup
-RUN echo 'xgnome-terminal &'                                                                         >> /home/$USER/.vnc/xstartup
+
+RUN echo '#!/bin/sh'                                                                                             >    /home/$USER/.vnc/xstartup
+RUN echo 'export XKL_XMODMAP_DISABLE=1'                                        >> /home/$USER/.vnc/xstartup
+RUN echo 'unset SESSION_MANAGER'                                                         >> /home/$USER/.vnc/xstartup
+RUN echo 'unset DBUS_SESSION_BUS_ADDRESS'                                 >> /home/$USER/.vnc/xstartup
+RUN echo '[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup'            >> /home/$USER/.vnc/xstartup
+RUN echo '[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources'  >> /home/$USER/.vnc/xstartup
+RUN echo 'xsetroot -solid grey'                                                                        >> /home/$USER/.vnc/xstartup
+RUN echo 'vncconfig -iconic &'                                                                         >> /home/$USER/.vnc/xstartup
+RUN echo 'gnome-panel &'                                                                                >> /home/$USER/.vnc/xstartup
+RUN echo 'gnome-settings-daemon &'                                                        >> /home/$USER/.vnc/xstartup
+RUN echo 'metacity &'                                                                                         >> /home/$USER/.vnc/xstartup
+RUN echo 'nautilus &'                                                                                          >> /home/$USER/.vnc/xstartup
+RUN echo 'gnome-terminal &'                                                                         >> /home/$USER/.vnc/xstartup
+
 
 RUN echo "${PASSWD}" | vncpasswd -f   >    /home/$USER/.vnc/passwd
 RUN echo $PASSWD > password.txt && \
