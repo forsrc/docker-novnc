@@ -22,8 +22,8 @@ RUN apt-get clean
 RUN /bin/dbus-uuidgen --ensure
 
 RUN useradd -m $USER && \
-         echo "$USER:$PASSWD" | chpasswd && \
-         echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+          echo "$USER:$PASSWD" | chpasswd && \
+          echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 
 
 RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout /home/$USER/novnc.pem -out /home/$USER/novnc.pem -days 365 -subj /C=CN/O="forsrc"/OU="forsrc"/CN="forsrc"/ST="forsrc"/L="forsrc"
@@ -48,7 +48,7 @@ RUN echo 'gnome-terminal &'                                                     
 RUN echo "${PASSWD}" | vncpasswd -f   >    /home/$USER/.vnc/passwd
 RUN echo $PASSWD > password.txt && \
           cat password.txt password.txt | vncpasswd -f && \
-          rm password.txt
+          rm -f password.txt
 
 RUN touch /home/$USER/.Xauthority
 RUN chown -R $USER:$USER /home/$USER
