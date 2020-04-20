@@ -39,6 +39,13 @@ RUN chown -R $USER:0 /home/$USER && \
           chmod 775 /home/$USER/.vnc/xstartup && \
           chmod 600 /home/$USER/.vnc/passwd
 
+RUN echo "rm -rf /tmp/.X1-lock /tmp/.X11-unix"  > /start.sh
+RUN echo "vncserver -kill :1"                                       >> /start.sh
+RUN echo "vncserver -geometry \$DISPLAY :1"   >> /start.sh
+RUN echo "websockify --web=/usr/share/novnc/ --ssl-only --cert=/home/\$USER/novnc.pem --key=/home/\$USER/novnc.pem  6080 localhost:5901" >> /start.sh
+
+RUN chown -R $USER:$USER /start.sh
+RUN chmod +x                              /start.sh
 
 EXPOSE 5901
 EXPOSE 6080
@@ -48,7 +55,7 @@ USER $USER
 
 #ENTRYPOINT ["/usr/bin/vncserver", "-fg"]
 
-CMD ["sh", "-c", "vncserver -geometry $DISPLAY :1 && websockify --web=/usr/share/novnc/ --cert=/home/$USER/novnc.pem 6080 localhost:5901"]
+#CMD ["sh", "-c", "vncserver -geometry $DISPLAY :1 && websockify --web=/usr/share/novnc/ --cert=/home/$USER/novnc.pem 6080 localhost:5901"]
 
-
+CMD ["sh", "-c", "/start.sh"]
 
