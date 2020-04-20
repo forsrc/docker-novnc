@@ -58,12 +58,20 @@ RUN chown -R $USER:$USER /home/$USER && \
 
 #RUN sed -i '0,/port=-1/{s/port=-1/port=5901/}' /etc/xrdp/xrdp.ini
 
+RUN echo "vncserver -kill :1"                                         > /start.sh
+RUN echo "vncserver -geometry \$DISPLAY :1"  >> /start.sh
+RUN echo "websockify --web=/usr/share/novnc/ --ssl-only --cert=/home/\$USER/novnc.pem --key=/home/\$USER/novnc.pem  6080 localhost:5901" >> /start.sh
+
+RUN chown -R $USER:$USER /start.sh
+RUN chmod +x                              /start.sh
+
 EXPOSE 5901
 EXPOSE 6080
 
 WORKDIR /home/$USER
 USER $USER
 
-CMD ["sh", "-c", "vncserver -geometry $DISPLAY :1 && websockify --web=/usr/share/novnc/ --ssl-only --cert=/home/$USER/novnc.pem --key=/home/$USER/novnc.pem  6080 localhost:5901"]
+
+CMD ["sh", "-c", "/start.sh"]
 
 
