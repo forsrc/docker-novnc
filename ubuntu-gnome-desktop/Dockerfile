@@ -21,9 +21,9 @@ RUN apt-get clean
 
 #RUN /bin/dbus-uuidgen --ensure
 
-RUN useradd -m $USER && \
-         echo "$USER:$PASSWD" | chpasswd && \
-         echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+RUN useradd -m --shell /bin/bash $USER && \
+    echo "$USER:$PASSWD" | chpasswd && \
+    echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 
 RUN gsettings set org.gnome.Vino require-encryption false
 
