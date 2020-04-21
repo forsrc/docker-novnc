@@ -21,7 +21,7 @@ RUN apt-get clean
 
 RUN /bin/dbus-uuidgen --ensure
 
-RUN useradd -m $USER && \
+RUN useradd -m --shell /bin/bash $USER && \
     echo "$USER:$PASSWD" | chpasswd && \
     echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 
