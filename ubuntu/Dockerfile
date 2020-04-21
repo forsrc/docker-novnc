@@ -26,14 +26,14 @@ RUN useradd -m $USER && \
 RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout /home/$USER/novnc.pem -out /home/$USER/novnc.pem -days 365 -subj /C=CN/O="forsrc"/OU="forsrc"/CN="forsrc"/ST="forsrc"/L="forsrc"
 
 RUN mkdir /home/$USER/.vnc
-RUN echo '#!/bin/sh'                                                      >    /home/$USER/.vnc/xstartup
-RUN echo 'xrdb $HOME/.Xresources'                      >> /home/$USER/.vnc/xstartup
-RUN echo 'xsetroot -solid grey'                                 >> /home/$USER/.vnc/xstartup
-RUN echo 'export XKL_XMODMAP_DISABLE=1' >> /home/$USER/.vnc/xstartup
-RUN echo '/etc/X11/Xsession'                                    >> /home/$USER/.vnc/xstartup
-RUN echo 'lxterminal &'                                                >> /home/$USER/.vnc/xstartup
-RUN echo '/usr/bin/lxsession -s LXDE &'               >> /home/$USER/.vnc/xstartup
-RUN echo "${PASSWD}" | vncpasswd -f                 >    /home/$USER/.vnc/passwd
+RUN echo '#!/bin/sh'                       >  /home/$USER/.vnc/xstartup
+RUN echo 'xrdb $HOME/.Xresources'          >> /home/$USER/.vnc/xstartup
+RUN echo 'xsetroot -solid grey'            >> /home/$USER/.vnc/xstartup
+RUN echo 'export XKL_XMODMAP_DISABLE=1'    >> /home/$USER/.vnc/xstartup
+RUN echo '/etc/X11/Xsession'               >> /home/$USER/.vnc/xstartup
+RUN echo 'lxterminal &'                    >> /home/$USER/.vnc/xstartup
+RUN echo '/usr/bin/lxsession -s LXDE &'    >> /home/$USER/.vnc/xstartup
+RUN echo "${PASSWD}" | vncpasswd -f        >  /home/$USER/.vnc/passwd
 RUN echo $PASSWD > password.txt && \
     cat password.txt password.txt | vncpasswd -f && \
     rm password.txt
@@ -46,7 +46,7 @@ RUN chown -R $USER:$USER /home/$USER && \
 
 RUN sed -i '0,/port=-1/{s/port=-1/port=5901/}' /etc/xrdp/xrdp.ini
 
-RUN echo "rm -rf /tmp/.X1-lock /tmp/.X11-unix"  > /start.sh
+RUN echo "rm -rf /tmp/.X1-lock /tmp/.X11-unix" >  /start.sh
 RUN echo "vncserver -kill :1"                  >> /start.sh
 RUN echo "vncserver -geometry \$DISPLAY :1"    >> /start.sh
 RUN echo "websockify --web=/usr/share/novnc/ --ssl-only --cert=/home/\$USER/novnc.pem --key=/home/\$USER/novnc.pem  6080 localhost:5901" >> /start.sh
