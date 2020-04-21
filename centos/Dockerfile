@@ -23,9 +23,10 @@ RUN yum clean all && \
 
 RUN /bin/dbus-uuidgen --ensure
 
-RUN useradd -m $USER && \
+RUN useradd -m --shell /bin/bash $USER && \
           echo "$USER:$PASSWD" | chpasswd && \
           echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+
 
 
 RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout /home/$USER/novnc.pem -out /home/$USER/novnc.pem -days 365 -subj /C=CN/O="forsrc"/OU="forsrc"/CN="forsrc"/ST="forsrc"/L="forsrc"
