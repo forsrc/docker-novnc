@@ -3,7 +3,7 @@ MAINTAINER forsrc@gmail.com
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV USER=forsrc
-ENV PASSWD=forsrc
+ARG PASSWD=forsrc
 ENV DISPLAY=1280x1024
 
 
