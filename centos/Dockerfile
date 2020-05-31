@@ -1,8 +1,10 @@
 FROM centos:7
 MAINTAINER forsrc@gmail.com
 
-ENV USER=forsrc
-ARG PASSWD=forsrc
+ARG USER
+ENV USER=${USER:-forsrc}
+ARG PASSWD
+ARG PASSWD=${PASSWD:-forsrc}
 ENV DISPLAY=1280x1024
 
 RUN yum makecache && \
