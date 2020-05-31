@@ -2,8 +2,10 @@ FROM ubuntu:19.10
 MAINTAINER forsrc@gmail.com
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV USER=forsrc
-ARG PASSWD=forsrc
+ARG USER
+ENV USER=${USER:-forsrc}
+ARG PASSWD
+ARG PASSWD=${PASSWD:-forsrc}
 ENV DISPLAY=1280x1024
 
 RUN apt-get update
