@@ -11,15 +11,20 @@ ENV DISPLAY=1280x1024
 RUN apt-get update
 
 
-RUN apt-get install -y --no-install-recommends ubuntu-desktop && \
-    apt-get install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal xterm
-          
+#RUN apt-get install -y --no-install-recommends ubuntu-desktop && \
+#    apt-get install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal xterm
+
+RUN apt-get install -y ubuntu-desktop
+
+RUN apt-get install -y xrdp
+
 RUN apt-get install -y nano tightvncserver sudo systemd
 
 RUN apt-get install -y python-numpy websockify novnc
 
 RUN apt-get clean
 
+RUN systemctl enable xrdp
 
 RUN /bin/dbus-uuidgen --ensure
 
